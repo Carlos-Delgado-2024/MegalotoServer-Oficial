@@ -18,7 +18,7 @@ const server = http.createServer(app);
 // Configuración de CORS para permitir solo ciertas URL
 const io = new Server(server, {
     cors: {
-      origin: ['https://megaloto-vfinal.web.app', 'http://localhost:3000'],  // URLs permitidas
+      origin: ['https://megaloto-express.web.app/', 'http://localhost:3000'],  // URLs permitidas
       methods: ['GET', 'POST'],  // Métodos permitidos
     }
   });
