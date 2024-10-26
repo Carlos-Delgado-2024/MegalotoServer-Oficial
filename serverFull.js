@@ -18,7 +18,7 @@ const server = http.createServer(app);
 // Configuración de CORS para permitir solo ciertas URL
 const io = new Server(server, {
     cors: {
-      origin: ['https://megaloto-express.web.app', 'http://localhost:3000'],  // URLs permitidas
+      origin: ['https://megaloto-express.web.app'],  // URLs permitidas
       methods: ['GET', 'POST'],  // Métodos permitidos
     }
   });
@@ -29,24 +29,17 @@ io.on('connection', async(socket) => {
   count += 1
   console.log('Un cliente se ha conectado');
   console.log('clientes conectados', count);
-
-  //////////////////////solo para prueba////////////////////////////
-  // const idSorteo ='2r9Gq2yDM5AAHYr6lbWc'
-  // IniciarSorteo(idSorteo)
-  const ahora = new Date()
-  console.log(ahora)
+  // const ahora = new Date()
+  // console.log(ahora)
   //////////////////////manejo de cuenta////////////////////////////
-  // Manejar autenticación con Google
-  // socket.on('authToken', ({ token }) => {
-  //   Login(token, socket, io);
-  // }); 
-  // socket.on('asigAdmin',(uid)=>{
-  //   setAdminRole(uid)
-  // })
   socket.on('newUser',(data)=>{
     Login(data, socket)
   })
-  listAllUsers(socket)
+  socket.on('initYa',(uid)=>{
+    console.log('se desplego init')
+    InitYa(uid)
+  })
+  // listAllUsers(socket)
   // Manejar suspensión de cuenta
   socket.on('suspen', async ({ id }) => {
     try {

@@ -4,7 +4,7 @@ console.log(serviceAccount)
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://megaloto-v2.firebaseio.com'
+  databaseURL: 'https://megaloto-express.firebaseio.com'
 });
 
 const db = admin.firestore();
