@@ -8,6 +8,8 @@ const { suspendUserAccount, enableUserAccount } = require('./functions/suspen-en
 const { NewSorteo, eliminarSorteo, comprarNumeros, IniciarSorteo, AsignarFecha } = require('./functions/sorteos');
 const { newCargaNequi, soliAprobada, eliminarRecargaNequi, soliCancelada, soliModificada } = require('./functions/saldo');
 const { setAdminRole } = require('./functions/newAdmin')
+const { sendNotificationToGroup } = require('./functions/notificaciones')
+
 const cron = require('node-cron');
 const PORT = process.env.PORT || 5000
 
@@ -38,6 +40,13 @@ io.on('connection', async(socket) => {
   socket.on('initYa',(uid)=>{
     console.log('se desplego init')
     InitYa(uid)
+  })
+  socket.on('notificacionSend',(data)=>{
+    sendNotificationToGroup(data)
+  })
+  socket.on('notificacionAdd',(data)=>{
+    console.log('se recivio notificacionAdd')
+    notificacion(data.uid, data.tokenMesseger)
   })
   // listAllUsers(socket)
   // Manejar suspensión de cuenta
