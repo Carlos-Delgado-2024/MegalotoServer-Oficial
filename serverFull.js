@@ -33,6 +33,22 @@ io.on('connection', async(socket) => {
   console.log('clientes conectados', count);
   // const ahora = new Date()
   // console.log(ahora)
+  // Función para emitir un dato cada 5 minutos (300,000 ms)
+const emitDataEveryFiveMinutes = () => {
+  setInterval(() => {
+    const data = {
+      message: 'Este es un dato enviado cada 5 minutos',
+      timestamp: new Date().toISOString(),
+    };
+
+    // Emitir el dato a todos los clientes conectados
+    io.emit('datoEspecifico', data);
+    console.log('Dato emitido:', data);
+  }, 300000); // 300000 ms = 5 minutos
+};
+
+// Iniciar la función al arrancar el servidor
+emitDataEveryFiveMinutes();
   //////////////////////manejo de cuenta////////////////////////////
   socket.on('newUser',(data)=>{
     Login(data, socket)
