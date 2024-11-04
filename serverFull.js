@@ -9,6 +9,7 @@ const { NewSorteo, eliminarSorteo, comprarNumeros, IniciarSorteo, AsignarFecha }
 const { newCargaNequi, soliAprobada, eliminarRecargaNequi, soliCancelada, soliModificada } = require('./functions/saldo');
 const { setAdminRole } = require('./functions/newAdmin')
 const { sendNotificationToGroup } = require('./functions/notificaciones')
+const { resetExpress, initExpress } = require('./functions/sorteoExpress')
 
 const cron = require('node-cron');
 const PORT = process.env.PORT || 5000
@@ -26,6 +27,14 @@ const io = new Server(server, {
   });
 
   let count = 0;
+///sorteo express/////
+cron.schedule('5 * * * *', () => {
+  resetExpress()
+})
+cron.schedule('0 * * * *', () => {
+  initExpress()
+})
+
 // Cuando un cliente se conecta
 io.on('connection', async(socket) => {
   count += 1
