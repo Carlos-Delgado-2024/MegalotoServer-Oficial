@@ -29,6 +29,7 @@ const io = new Server(server, {
   let count = 0;
 /sorteo express/////
 cron.schedule('20 22 * * *', () => {
+  console.log('entro al reset')
   resetExpress()
 })
 cron.schedule('15 19 * * *', () => {
