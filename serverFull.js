@@ -28,7 +28,7 @@ const io = new Server(server, {
 
   let count = 0;
 /sorteo express/////
-cron.schedule('45 22 * * *', () => {
+cron.schedule('5 4 * * *', () => {
   console.log('entro al reset')
   resetExpress()
 })
