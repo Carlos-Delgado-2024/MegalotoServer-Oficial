@@ -37,6 +37,8 @@ cron.schedule('15 19 * * *', () => {
 })
 cron.schedule('*/5 * * * *', () => {
   console.log('Esta tarea se ejecuta cada 5 minutos');
+  const hora = new Date()
+  console.log(hora)
   // Llama a la función que necesitas ejecutar aquí
  //ejecutarMiFuncion();
 });
