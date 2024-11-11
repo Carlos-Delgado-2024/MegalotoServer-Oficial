@@ -55,6 +55,10 @@ io.on('connection', async(socket) => {
   socket.on('listoExpress',()=>{
     io.emit('listoExpress')
   })
+  socket.on('iniciarExpress',()=>{
+    console.log('se inicio express')
+    initExpress()
+  })
   //////////////////////manejo de cuenta////////////////////////////
   socket.on('newUser',(data)=>{
     Login(data, socket)
