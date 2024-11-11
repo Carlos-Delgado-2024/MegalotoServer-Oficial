@@ -79,24 +79,26 @@ const comprarNumeros = async (data) => {
       });
 
       // Obtener el usuario de Firebase Authentication
-      const userRecord = await db.collection('users').doc(data.uid);
-      const docuser = await userRecord.get();
-      const datadocuser = docuser.data();
-
-      // Calcular el pago
-      const pago = datadoc['valor'] * data.seleccionados.length;
-      const saldoActual = datadocuser.saldo;
-
-      // Validar si el usuario tiene saldo suficiente
-      if (saldoActual < pago) {
-        return { success: false, message: 'Saldo insuficiente para completar la compra' };
+      if(!data.admin){
+        const userRecord = await db.collection('users').doc(data.uid);
+        const docuser = await userRecord.get();
+        const datadocuser = docuser.data();
+  
+        // Calcular el pago
+        const pago = datadoc['valor'] * data.seleccionados.length;
+        const saldoActual = datadocuser.saldo;
+  
+        // Validar si el usuario tiene saldo suficiente
+        if (saldoActual < pago) {
+          return { success: false, message: 'Saldo insuficiente para completar la compra' };
+        }
+  
+        // Actualizar el saldo del usuario
+        const newSaldo = saldoActual - pago;
+        await db.collection('users').doc(data.uid).update({
+          saldo: newSaldo
+        });
       }
-
-      // Actualizar el saldo del usuario
-      const newSaldo = saldoActual - pago;
-      await db.collection('users').doc(data.uid).update({
-        saldo: newSaldo
-      });
 
       // Comprobar si todos los números ya están ocupados
       const puestosDisponibles = newArrayPuesto.filter(obj => Object.values(obj)[0] === '').length;

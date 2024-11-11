@@ -32,7 +32,7 @@ cron.schedule('0 1 * * *', () => {
   console.log('entro al reset')
   resetExpress()
 })
-cron.schedule('3 0 * * *', () => {
+cron.schedule('0 0 * * *', () => {
   console.log('inicio sorteo express')
   initExpress()
 })
