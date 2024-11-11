@@ -109,7 +109,9 @@ const comprarNumeros = async (data) => {
           fecha: 'Sin Asignar'
         });
       }
-
+      if(data.admin){
+        return { success: true, message: 'Números asignados correctamente', newSaldo: 0, uid: data.uid }
+      }
       return { success: true, message: 'Números asignados correctamente', newSaldo: newSaldo, uid: data.uid };
     }
 
