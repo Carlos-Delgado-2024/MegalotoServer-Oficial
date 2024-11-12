@@ -90,7 +90,7 @@ const initExpress = async() => {
 }
 const listExpress = async(data) =>{
     await db.collection('sorteos').doc(data.id).update({
-        'listo':true
+        'listo':data.bol
     })
 
 }
