@@ -25,8 +25,8 @@ const resetExpress = async(id)=>{
         return
     }
     const ArrayPuestos = []
-    for(let i = 0; i <= data.puestos-1;i++){
-        const numero = i.toString().padStart(data.puestos.toString().length-1,'0')
+    for(let i = 0; i <= sorteoData.puestos-1;i++){
+        const numero = i.toString().padStart(sorteoData.puestos.toString().length-1,'0')
         ArrayPuestos.push({[numero]:''})
     }
     await db.collection('sorteos').doc(id).update({
