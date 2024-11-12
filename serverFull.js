@@ -53,6 +53,7 @@ io.on('connection', async(socket) => {
   // console.log(ahora)
   // Función para emitir un dato cada 5 minutos (300,000 ms)
   socket.on('listoExpress',()=>{
+    console.log('listo express')
     io.emit('listoExpress')
   })
   socket.on('iniciarExpress',()=>{
