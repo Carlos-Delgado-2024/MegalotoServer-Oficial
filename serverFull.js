@@ -27,22 +27,22 @@ const io = new Server(server, {
   });
 
   let count = 0;
-/sorteo express/////
-cron.schedule('0 1 * * *', () => {
-  console.log('entro al reset')
-  resetExpress()
-})
-cron.schedule('0 0 * * *', () => {
-  console.log('inicio sorteo express')
-  initExpress()
-})
-cron.schedule('*/5 * * * *', () => {
-  console.log('Esta tarea se ejecuta cada 5 minutos');
-  const hora = new Date()
-  console.log(hora)
-  // Llama a la función que necesitas ejecutar aquí
- //ejecutarMiFuncion();
-});
+////sorteo express/////
+// cron.schedule('0 1 * * *', () => {
+//   console.log('entro al reset')
+//   resetExpress()
+// })
+// cron.schedule('0 0 * * *', () => {
+//   console.log('inicio sorteo express')
+//   initExpress()
+// })
+// cron.schedule('*/5 * * * *', () => {
+//   console.log('Esta tarea se ejecuta cada 5 minutos');
+//   const hora = new Date()
+//   console.log(hora)
+//   // Llama a la función que necesitas ejecutar aquí
+//  //ejecutarMiFuncion();
+// });
 
 // Cuando un cliente se conecta
 io.on('connection', async(socket) => {
@@ -57,10 +57,15 @@ io.on('connection', async(socket) => {
     await listExpress(data)
     console.log('listo express')
   })
-  socket.on('iniciarExpress',()=>{
+  socket.on('inicioExpress',(data)=>{
     console.log('se inicio express')
-    initExpress()
+    initExpress(data.id)
   })
+  socket.on('resetExpress',(data)=>{
+    console.log('se reseteo express')
+    resetExpress(data.id)
+  })
+  
   //////////////////////manejo de cuenta////////////////////////////
   socket.on('newUser',(data)=>{
     Login(data, socket)
