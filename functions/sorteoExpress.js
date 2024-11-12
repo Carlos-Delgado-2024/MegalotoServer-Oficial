@@ -38,10 +38,10 @@ const resetExpress = async(id)=>{
     
 }
 const initExpress = async(id) => {
-    const numeroGanador = Math.floor(Math.random() * data.puestos).toString().padStart(data.puestos.toString().length-1,'0')
     const sorteoref = db.collection('sorteos').doc(id)
     const sorteoDoc = await sorteoref.get()
     const sorteoData = sorteoDoc.data()
+    const numeroGanador = Math.floor(Math.random() * sorteoData.puestos).toString().padStart(sorteoData.puestos.toString().length-1,'0')
     const userGanador = sorteoData.arryPuestos[Number(numeroGanador)][numeroGanador]
     await db.collection('sorteos').doc(id).update({
         'ganador':numeroGanador,
