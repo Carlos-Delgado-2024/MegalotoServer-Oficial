@@ -52,7 +52,8 @@ io.on('connection', async(socket) => {
   // const ahora = new Date()
   // console.log(ahora)
   // Función para emitir un dato cada 5 minutos (300,000 ms)
-  socket.on('listoExpress',()=>{
+  socket.on('listoExpress',(data)=>{
+    
     console.log('listo express')
     io.emit('listoExpress')
   })

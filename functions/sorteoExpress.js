@@ -88,4 +88,10 @@ const initExpress = async() => {
     }
 
 }
-module.exports = {resetExpress, initExpress}
+const listExpress = async(data) =>{
+    await db.collection('sorteos').doc(data.id).update({
+        'listo':true
+    })
+
+}
+module.exports = {resetExpress, initExpress, listExpress}
