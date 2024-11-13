@@ -1,3 +1,51 @@
+const { admin } = require('../config/firebase')
+const db = admin.firestore()
+
+const NewSorteo = async(sorteoData)=>{
+    //console.log(sorteoData)
+    const arrayPuesto = []
+    for(let i = 0; i<=sorteoData.formData.puestos-1; i++){
+        const numero = i.toString().padStart(sorteoData.formData.puestos.toString().length-1,'0')
+        arrayPuesto.push({[numero]:''})
+    }
+    try{
+        // Guarda el documento con un ID automático
+        const docData = {
+          estado: 'Participando',
+          premio: sorteoData.formData.premio,
+          valor: sorteoData.formData.valor,
+          puestos: sorteoData.formData.puestos,
+          urlImg: sorteoData.fileUrl,
+          typeLot: sorteoData.formData.typeLot,
+          arryPuestos: arrayPuesto // Ejemplo: Array de puestos
+      };
+      
+      // Verificamos si el tipo de sorteo es 'Express' para añadir 'premioBase'
+      if (sorteoData.formData.typeLot === 'Express') {
+          docData.premioBase = sorteoData.formData.premioBase;
+      }
+      
+      const docRef = await db.collection('sorteos').add(docData);
+
+        //console.log('Sorteo guardado con ID:', docRef.id);
+        return { success: true, message: 'Sorteo guardado correctamente', id: docRef.id };
+    
+    }catch (error) {
+        //console.error('Error al guardar el sorteo:', error);
+        return { success: false, message: error.message };
+    }
+}
+const eliminarSorteo = async (idSorteo) => {
+    try {
+        // Eliminar el documento de la colección 'sorteos' con el ID especificado
+        await db.collection('sorteos').doc(idSorteo).delete();
+        //console.log(`Sorteo con ID ${idSorteo} eliminado correctamente.`);
+        return { success: true, message: 'Sorteo eliminado correctamente' };
+    } catch (error) {
+        console.error('Error al eliminar el sorteo:', error);
+        return { success: false, message: error.message };
+    }
+};
 // Función para comprar números
 const comprarNumeros = async (data) => {
   try {
@@ -77,3 +125,36 @@ const comprarNumeros = async (data) => {
     return { success: false, message: 'Ocurrió un error al procesar la compra', error };
   }
 };
+
+  const AsignarFecha = async(data)=>{
+    await db.collection('sorteos').doc(data.id).update({
+      fecha: data.fecha
+    })
+
+  }
+  const IniciarSorteo = async(id)=>{
+    console.log('entro')
+    const docRef = db.collection('sorteos').doc(id);
+    const doc = await docRef.get();
+    const datadoc = doc.data();
+    const NumeroGanador = await Math.floor(Math.random() * datadoc.puestos).toString().padStart(datadoc.puestos.toString().length-1,'0')
+    console.log(NumeroGanador)
+    const uidGanador = await datadoc.arryPuestos[Number(NumeroGanador)][NumeroGanador]
+    console.log(uidGanador)
+    const userRef = db.collection('users').doc(uidGanador)
+    const userdoc= await userRef.get()
+    const userdata = userdoc.data()
+    console.log(userdata.nombre)
+    await db.collection('sorteos').doc(id).update({
+      estado:'Realizado',
+      ganador:NumeroGanador,
+      uidGanador,
+      nombreGanador:userdata.nombre
+    })
+    return NumeroGanador
+  }
+  
+    
+
+
+module.exports = {NewSorteo, eliminarSorteo, comprarNumeros, IniciarSorteo, AsignarFecha}
