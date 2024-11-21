@@ -83,6 +83,7 @@ io.on('connection', async(socket) => {
   })
   //actualizar datos
   socket.on('activarVendedor',(data)=>{
+    console.log('se activo Vendedor')
     activarVendedor(data)
   })
   // listAllUsers(socket)
