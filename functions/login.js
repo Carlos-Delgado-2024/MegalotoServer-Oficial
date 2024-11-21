@@ -47,7 +47,10 @@ const activarVendedor = async(data)=>{
         cc:data.data.identificacion,
         nequi:data.data.nequi,
         tel: data.data.telefono,
-        experiencia: data.data.experiencia
+        experiencia: data.data.experiencia,
+        data:{
+            photoURL:data.foto
+        }
     })
     socket.emit('authResponse', { success: true, message: 'Usuario Actualizado Correctamente' });
 
