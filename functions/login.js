@@ -41,4 +41,16 @@ const notificacion = async(uid,tokenMesseger)=>{
         tokenMesseger:tokenMesseger
     })
 }
-module.exports = { Login, InitYa, notificacion };
+const actualizarUser = async(data)=>{
+    await db.collection('users').doc(data.uid).update({
+        vendedor:true,
+        cc:data.data.identificacion,
+        nequi:data.data.nequi,
+        tel: data.data.telefono,
+        experiencia: data.data.experiencia
+    })
+    socket.emit('authResponse', { success: true, message: 'Usuario Actualizado Correctamente' });
+
+
+}
+module.exports = { Login, InitYa, notificacion, actualizarUser  };
