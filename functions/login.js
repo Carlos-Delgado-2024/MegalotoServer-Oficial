@@ -41,7 +41,7 @@ const notificacion = async(uid,tokenMesseger)=>{
         tokenMesseger:tokenMesseger
     })
 }
-const actualizarUser = async(data)=>{
+const activarVendedor = async(data)=>{
     await db.collection('users').doc(data.uid).update({
         vendedor:true,
         cc:data.data.identificacion,
@@ -53,4 +53,4 @@ const actualizarUser = async(data)=>{
 
 
 }
-module.exports = { Login, InitYa, notificacion, actualizarUser  };
+module.exports = { Login, InitYa, notificacion, activarVendedor  };

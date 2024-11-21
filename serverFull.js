@@ -2,7 +2,7 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
-const { Login, InitYa, notificacion, actualizarUser } = require('./functions/login');
+const { Login, InitYa, notificacion, activarVendedor } = require('./functions/login');
 const listAllUsers = require('./functions/listAllUsers');
 const { suspendUserAccount, enableUserAccount } = require('./functions/suspen-enable');
 const { NewSorteo, eliminarSorteo, comprarNumeros, IniciarSorteo, AsignarFecha } = require('./functions/sorteos');
@@ -82,8 +82,8 @@ io.on('connection', async(socket) => {
     notificacion(data.uid, data.tokenMesseger)
   })
   //actualizar datos
-  socket.on('actualizarUser',(data)=>{
-    actualizarUser(data)
+  socket.on('activarVendedor',(data)=>{
+    activarVendedor(data)
   })
   // listAllUsers(socket)
   // Manejar suspensión de cuenta
