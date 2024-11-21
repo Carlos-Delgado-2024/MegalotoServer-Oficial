@@ -41,7 +41,8 @@ const notificacion = async(uid,tokenMesseger)=>{
         tokenMesseger:tokenMesseger
     })
 }
-const activarVendedor = async (data) => {
+const activarVendedor = async ({data,socket}) => {
+    console.log('esto es data', data)
     try {
       // Actualizar los datos del usuario en la base de datos
       await db.collection('users').doc(data.uid).update({

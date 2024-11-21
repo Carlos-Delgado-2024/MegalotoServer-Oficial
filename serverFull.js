@@ -83,8 +83,8 @@ io.on('connection', async(socket) => {
   })
   //actualizar datos
   socket.on('activarVendedor',(data)=>{
-    console.log('se activo Vendedor', data)
-    activarVendedor(data)
+    console.log('se activo Vendedor')
+    activarVendedor({data, socket})
   })
   // listAllUsers(socket)
   // Manejar suspensión de cuenta
