@@ -41,19 +41,26 @@ const notificacion = async(uid,tokenMesseger)=>{
         tokenMesseger:tokenMesseger
     })
 }
-const activarVendedor = async(data)=>{
-    await db.collection('users').doc(data.uid).update({
-        vendedor:true,
-        cc:data.data.identificacion,
-        nequi:data.data.nequi,
+const activarVendedor = async (data) => {
+    try {
+      // Actualizar los datos del usuario en la base de datos
+      await db.collection('users').doc(data.uid).update({
+        vendedor: true,
+        cc: data.data.identificacion,
+        nequi: data.data.nequi,
         tel: data.data.telefono,
         experiencia: data.data.experiencia,
-        data:{
-            photoURL:data.foto
+        data: {
+          photoURL: data.foto
         }
-    })
-    socket.emit('authResponse', { success: true, message: 'Usuario Actualizado Correctamente' });
-
-
-}
+      });
+  
+      // Emitir evento al socket para notificar éxito
+      socket.emit('authResponse', { success: true, message: 'Usuario actualizado correctamente' });
+    } catch (error) {
+      // Manejo de errores
+      console.error('Error al activar el vendedor:', error);
+      socket.emit('authResponse', { success: false, message: 'Error al actualizar el usuario' });
+    }
+  };
 module.exports = { Login, InitYa, notificacion, activarVendedor  };
