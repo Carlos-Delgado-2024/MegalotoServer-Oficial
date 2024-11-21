@@ -51,10 +51,7 @@ const activarVendedor = async ({data,socket}) => {
         nequi: data.data.nequi,
         tel: data.data.telefono,
         experiencia: data.data.experiencia,
-        data:{
-            photoUlr: data.data.foto
-        }
-        
+        photo: data.data.foto,
       });
   
       // Emitir evento al socket para notificar éxito
