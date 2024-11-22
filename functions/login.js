@@ -63,17 +63,17 @@ const activarVendedor = async ({data,socket}) => {
     }
   };
 
-const xxxxx = async()=>{
-    const uid = 'jm7NaQOsmuYcCrP0QdQCRQZNUQb2'
-    const collectionRef = db.collection('users')
-    const snapshot = await collectionRef.get()
-    let results = [];
-    snapshot.forEach(doc => {
-        results.push(doc.id);
-    });
-    console.log(results)
-    await db.collection('users').doc(uid).update({
-        referidos:results
-    })
-}
-module.exports = { Login, InitYa, notificacion, activarVendedor, xxxxx };
+// const xxxxx = async()=>{
+//     const uid = 'jm7NaQOsmuYcCrP0QdQCRQZNUQb2'
+//     const collectionRef = db.collection('users')
+//     const snapshot = await collectionRef.get()
+//     let results = [];
+//     snapshot.forEach(doc => {
+//         results.push(doc.id);
+//     });
+//     console.log(results)
+//     await db.collection('users').doc(uid).update({
+//         referidos:results
+//     })
+// }
+module.exports = { Login, InitYa, notificacion, activarVendedor };
