@@ -21,6 +21,12 @@ const Login = async (userData,socket) => {
             tokenMesseger,
             referidoPadre
         });
+        const userRef = db.collection('users').doc(referidoPadre)
+        const userDoc = await userRef.get()
+        const userData = userDoc.data()
+        const referidos = userData.referidos || []
+        referidos.push(uid)
+        await userRef.update({referidos})
 
         console.log(`Usuario con UID: ${uid} creado exitosamente en la base de datos.`);
 
