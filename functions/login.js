@@ -23,8 +23,8 @@ const Login = async (userData,socket) => {
         });
         const userRef = db.collection('users').doc(referidoPadre)
         const userDoc = await userRef.get()
-        const userData = userDoc.data()
-        const referidos = userData.referidos || []
+        const userDat = userDoc.data()
+        const referidos = userDat.referidos || []
         referidos.push(uid)
         await userRef.update({referidos})
 
