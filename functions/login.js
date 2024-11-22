@@ -63,17 +63,5 @@ const activarVendedor = async ({data,socket}) => {
     }
   };
 
-const xxxxx = async()=>{
-    const uid = 'Lqz8LAncgIPCWKycWRw9BhOH83F3'
-    const collectionRef = db.collection('users')
-    const snapshot = await collectionRef.get()
-    let results = [];
-    snapshot.forEach(doc => {
-        results.push(doc.id);
-    });
-    console.log(results)
-    await db.collection('users').doc(uid).update({
-        referidos:results
-    })
-}
-module.exports = { Login, InitYa, notificacion, activarVendedor, xxxxx };
+
+module.exports = { Login, InitYa, notificacion, activarVendedor};
