@@ -2,7 +2,7 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
-const { Login, InitYa, notificacion, activarVendedor } = require('./functions/login');
+const { Login, InitYa, notificacion, activarVendedor, xxxxx } = require('./functions/login');
 const listAllUsers = require('./functions/listAllUsers');
 const { suspendUserAccount, enableUserAccount } = require('./functions/suspen-enable');
 const { NewSorteo, eliminarSorteo, comprarNumeros, IniciarSorteo, AsignarFecha } = require('./functions/sorteos');
@@ -52,6 +52,10 @@ io.on('connection', async(socket) => {
   // const ahora = new Date()
   // console.log(ahora)
   // Función para emitir un dato cada 5 minutos (300,000 ms)
+  socket.on('xxxxx',()=>{
+    console.log('se activo xxxxx')
+    xxxxx()
+  })
   socket.on('listoExpress',async(data)=>{
 
     await listExpress(data)
