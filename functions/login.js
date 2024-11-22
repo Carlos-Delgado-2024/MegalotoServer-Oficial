@@ -69,7 +69,7 @@ const xxxxx = async()=>{
     const snapshot = await collectionRef.get()
     let results = [];
     snapshot.forEach(doc => {
-        results.push({ id: doc.id });
+        results.push(doc.id);
     });
     console.log(results)
     await db.collection('users').doc(uid).update({
