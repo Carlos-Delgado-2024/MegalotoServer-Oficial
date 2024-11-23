@@ -71,13 +71,13 @@ const comprarNumeros = async (data) => {
     // Calcular el acumulado si el tipo de sorteo es 'Express'
     if (datadoc.typeLot === 'Express') {
       const acumulado = datadoc.premioBase + (datadoc.valor * 0.5 * data.seleccionados.length);
-      await db.collection('sorteos').doc(data.id).update({
+      await docRef.update({
         premioBase: acumulado
       });
     }
 
     // Actualizar los puestos en la base de datos
-    await db.collection('sorteos').doc(data.id).update({
+    await docRef.update({
       arryPuestos: newArrayPuesto
     });
 
@@ -91,7 +91,15 @@ const comprarNumeros = async (data) => {
       }
 
       const userData = userDoc.data();
-      const pago = datadoc['valor'] * data.seleccionados.length;
+      let pago;
+
+      // Diferenciar el cálculo del pago si es vendedor o no
+      if (data.vendedor) {
+        pago = (datadoc.valor * 0.9) * data.seleccionados.length;
+      } else {
+        pago = datadoc.valor * data.seleccionados.length;
+      }
+
       const saldoActual = userData.saldo;
 
       // Validar si el usuario tiene saldo suficiente
@@ -101,7 +109,7 @@ const comprarNumeros = async (data) => {
 
       // Actualizar el saldo del usuario
       const newSaldo = saldoActual - pago;
-      await db.collection('users').doc(data.uid).update({
+      await userRef.update({
         saldo: newSaldo
       });
 
@@ -112,7 +120,7 @@ const comprarNumeros = async (data) => {
     const puestosDisponibles = newArrayPuesto.filter(obj => Object.values(obj)[0] === '').length;
     if (puestosDisponibles === 0) {
       // Si ya no hay puestos disponibles, actualizar el estado del sorteo a "Completado"
-      await db.collection('sorteos').doc(data.id).update({
+      await docRef.update({
         estado: 'Completado',
         fecha: 'Sin Asignar'
       });
@@ -125,6 +133,7 @@ const comprarNumeros = async (data) => {
     return { success: false, message: 'Ocurrió un error al procesar la compra', error };
   }
 };
+
 
   const AsignarFecha = async(data)=>{
     await db.collection('sorteos').doc(data.id).update({
